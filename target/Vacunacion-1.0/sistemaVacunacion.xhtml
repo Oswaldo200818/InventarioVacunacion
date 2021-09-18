@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--ff5100-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
+    <h:head>
+        <title>Inventario de Vacunación</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="main.css" />
+    </h:head>
+    <h:body class="home">
+        <h:form id="userListForm" >
+            <p:growl id="message" showDetail="true" />
+            <p:messages />
+            <p:dataTable class="w-75 mx-auto d-block pt-5" id="userDataTable"
+                         value="#{empleadoBean.listEmpleado}" var="empleado" editable="true" rowKey="#{empleado.idEmpleado}"
+                         selection="#{empleadoBean.empleadoSelect}" selectionMode="single">
+                <f:facet name="header">
+                    <h2><h:outputLabel value="INVENTARIO DE VACUNACION" class="w-100 text-dark text-center fw-bold"/></h2>
+                </f:facet>
+
+                <p:column headerText="Ci">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{empleado.cedulaIdentidad}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{empleado.cedulaIdentidad}"/>
+                        </f:facet> 
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Nombres">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{empleado.nombres}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{empleado.nombres}"/> 
+                        </f:facet>  
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Apellidos">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{empleado.apellidos}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{empleado.apellidos}" />
+                        </f:facet>  
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Email">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{empleado.correoElectronico}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{empleado.correoElectronico}" />
+                        </f:facet>  
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Fecha Nacimiento">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{empleado.fechaNacimiento}" />
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{empleado.fechaNacimiento}" />
+                        </f:facet>  
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Address">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{empleado.direccion}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{empleado.direccion}"/>
+                        </f:facet> 
+                    </p:cellEditor>
+                </p:column>
+                <p:column headerText="Teléfono">
+                    <p:cellEditor>
+                        <f:facet name="output">
+                            <h:outputText value="#{empleado.telefono}"/>
+                        </f:facet>
+                        <f:facet name="input">
+                            <h:inputText value="#{empleado.telefono}"/>
+                        </f:facet> 
+                    </p:cellEditor>
+                </p:column>
+                <f:facet name="footer">
+
+                  
+                    <p:commandButton value="Agregar Empleado" class="w-25 mx-5" actionListener="#{empleadoBean.restartUserSelect()}"
+                                     update=":dialogForm" oncomplete="PF('userDialog').show()"/>  
+                    
+                    <p:commandButton value="Regresar Inicio" class="w-25 mx-5" action="index"
+                                     />
+                </f:facet>
+
+                <p:column headerText="Opciones">
+                    <p:rowEditor/>
+                </p:column>
+
+                <p:ajax event="rowEdit" listener="#{empleadoBean.editListener}"/>
+            </p:dataTable>
+            <p:contextMenu for="userDataTable">
+                <p:menuitem value="Eliminar" update="userListForm:userDataTable" icon="ui-icon-close"
+                            actionListener="#{empleadoBean.removeUser()}"/>
+            </p:contextMenu>
+        </h:form>
+        <p:dialog id="userDlg" widgetVar="userDialog" header="Agregar Empleado" modal="true" showEffect="fade" hideEffect="fade"
+                  resizable="false">
+            <h:form id="dialogForm">
+                <p:outputPanel>
+                    <p:panelGrid id="display" columns="4" columnClasses="label,value">
+                        <h:outputText value="Ci" />
+                        <h:inputText value="#{empleadoBean.empleadoSelect.cedulaIdentidad}">
+                            <f:validateRegex pattern="([0-9])\w+"/>
+                            <f:validateLength minimum="1" maximum="10"/>
+                        </h:inputText>
+
+                        <h:outputText value="Nombres" />
+                        <h:inputText value="#{empleadoBean.empleadoSelect.nombres}">
+                            <f:validateRegex pattern="[a-zA-Z\s]{1,45}" />
+                        </h:inputText>
+
+                        <h:outputText value="Apellidos" />
+                        <h:inputText value="#{empleadoBean.empleadoSelect.apellidos}" >
+                            <f:validateRegex pattern="[a-zA-Z\s]{1,45}" />
+                        </h:inputText>
+
+                        <h:outputText value="Email" />
+                        <h:inputText value="#{empleadoBean.empleadoSelect.correoElectronico}">
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        </h:inputText>
+
+                        <h:outputText value="Fecha Nacimiento" />
+                        <h:inputText value="#{empleadoBean.empleadoSelect.fechaNacimiento}">
+
+                        </h:inputText>
+
+                        <h:outputText value="Direccion" />
+                        <h:inputText value="#{empleadoBean.empleadoSelect.direccion}">  
+                            <f:validateRequired />
+                        </h:inputText>
+
+                        <h:outputText value="Teléfono" />
+                        <h:inputText value="#{empleadoBean.empleadoSelect.telefono}" >
+                            <f:validateRegex pattern="([0-9])\w+" />
+                            <f:validateLength minimum="1" maximum="10"/>
+                        </h:inputText>
+                        <f:facet name="footer">
+                            <p:commandButton value="Agregar" actionListener="#{empleadoBean.addUser()}" 
+                                             update="display, :userListForm:userDataTable" oncomplete="PF('userDialog').hide()"/>
+                        </f:facet>
+                    </p:panelGrid>
+                </p:outputPanel>
+            </h:form>
+        </p:dialog>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    </h:body>
+</html>
