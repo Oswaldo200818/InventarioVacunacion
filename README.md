@@ -1,4 +1,4 @@
-###Repositorio Inventario de Vacunación Empleados****
+###Repositorio Inventario de Vacunación de Empleados****
 
 **Introducción**
 Aplicativo que permite, llevar el control de todo el persona de la empresa que esta y no esta vacuna, para  prevención de COVID-19. Actualmente se encuentra  en proceso de implentación total de todas las funciones requeridas.
