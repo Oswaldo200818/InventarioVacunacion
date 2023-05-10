@@ -106,9 +106,4 @@ permite al empleado:
 - Por el momento visualizar sus datos, objetivo que pueda actualizar los datos indicados.
 - Botón que permite salir del sistema.
 
-**NOTA**
-Estimado/a.
-El proyecto no contiene el total de requisitos y funcionalidades queridas, adicional a los errores de código que se presentan en cada aplicativo a desarrollar,  lo que hizo  adoptar otras tecnologías sobre las requeridas,  para mi es lamentable y a la vez me motiva a seguir  esforzándome. Gracias por su tiempo, saludos.
-
-
 ###End
